@@ -11,6 +11,7 @@ from app.settings import APP_SECRET_KEY, ALGORITHM
 #region verify token
 class JWTBearer(HTTPBearer):
     authenticated_username = None
+    jwtoken = None
     def __init__(self, auto_error: bool = True):
         super(JWTBearer, self).__init__(auto_error=auto_error)
 
@@ -34,6 +35,7 @@ class JWTBearer(HTTPBearer):
             if not decoded_token["exp"] >= time.time():
                 raise
             JWTBearer.authenticated_username =  decoded_token["username"]
+            JWTBearer.jwtoken = jwtoken
         except:
             decoded_token = None
         if decoded_token:

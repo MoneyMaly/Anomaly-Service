@@ -1,5 +1,5 @@
 from typing import Optional, List
-
+import requests
 from fastapi import APIRouter, HTTPException, status, Depends
 
 from app.utils.auth_helper import JWTBearer
@@ -13,9 +13,14 @@ credentials_exception = HTTPException(
 
 
 @router.get("/users/{username}/bankaccounts/balance/",status_code=status.HTTP_200_OK, dependencies=[Depends(JWTBearer())])
-async def get_monthly_balance_by_user(username: str, month: Optional[int] = 1, year: Optional[int] = 2020):
+async def get_monthly_balance_by_user(username: str):
     if JWTBearer.authenticated_username != username:
         raise credentials_exception
+    try:
+        res = requests.get(f"http://192.116.98.107:8082/users/{username}/bankaccounts/balance/?month=1&year=2022", 
+        headers={'Authorization':f'Bearer {JWTBearer.jwtoken}'})
     # bank_accounts_list = await get_bank_accounts_list_by_username(username)
     # monthly_balance = await get_monthly_balance(bank_accounts_list, year, month)
-    return True 
+    except:
+        pass
+    return ["tal communications", "Hot TV"] 

@@ -7,6 +7,7 @@ from passlib.context import CryptContext
 from starlette.responses import JSONResponse
 
 from app.routers import anomaly
+from app.adapters import  db_adapter
 from app.settings import DATABASE_USER, DATABASE_PORT, DATABASE_PASSWORD, DATABASE_SERVER, DATABASE_NAME
 
 app = FastAPI(title='Anomaly Service API')
